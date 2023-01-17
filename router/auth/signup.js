@@ -87,10 +87,7 @@ router.post("/", (req, res) => {
                         throw err;
                       } else {
                         if (result.affectedRows === 1) {
-                          const student_id = result.insertId;
-                          req.session.user = { student_id };
-
-                          res.send(req.session); //****** output
+                          res.send("sign up success"); //****** output
                         } else {
                           res.status(417).send("expectation_failed"); //****** output
                         }
