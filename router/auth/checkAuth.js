@@ -21,6 +21,7 @@ router.post("/", (req, res) => {
                     res.send({ signup: true, emailVerify: true });
                   else res.send({ signup: true, emailVerify: false });
                 } else {
+                  req.session.destroy();
                   res.send({ signup: false, emailVerify: false });
                 }
             }

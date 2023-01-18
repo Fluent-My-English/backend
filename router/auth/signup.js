@@ -8,7 +8,10 @@ dotenv.config();
 
 
 router.use((req, res, next) => {
-  if (req.session.user) res.send("already signup"); //****** output
+  if (req.session.user) {
+    req.session.destroy();
+    res.send("already signup"); //****** output
+  }
   else next();
 });
 
