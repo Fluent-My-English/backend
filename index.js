@@ -3,8 +3,9 @@ const cors = require("cors");
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-const dotenv = require("dotenv")
-dotenv.config()
+const dotenv = require("dotenv");
+dotenv.config();
+const helmet = require('helmet');
 
 const loginRoute = require('./router/auth/login');
 const signupRoute = require('./router/auth/signup');
@@ -15,10 +16,15 @@ const checkAuthRoute = require('./router/auth/checkAuth');
 const app = express();
 const port = 8080;
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+    // origin: 'https://fluentmyenglish.com',
+    credentials: true
+}));
+
+
 app.use(express.json());
 
-// app.use(express.urlencoded());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
@@ -27,14 +33,18 @@ app.use(cookieParser());
 
 app.use(
   session({
-    secret: `${process.env.SESSION_KEY}`,
+    secret: "ROELAZQQPEZZMAMDFFAXMCNDJFHTYRLDASPOQXCVBJFGITUASSLF",
     resave: false,
     saveUninitialized: false,
     cookie: {
+        // httpOnly: true,
+        // sameSite: 'none',
       maxAge: 1000 * 60 * 60 * 12,
     },
   })
 );
+
+
 
 // Print called API path
 app.use((req, res, next) => {
